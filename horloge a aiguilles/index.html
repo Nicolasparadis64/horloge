@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horloge à Aiguille</title>
+    <style>
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; background: #f0f0f0; margin: 0; }
+        .clock { position: relative; width: 200px; height: 200px; border: 10px solid black; border-radius: 50%; }
+        .hand { position: absolute; bottom: 50%; left: 50%; transform-origin: bottom; transform: translateX(-50%); }
+        .hour { width: 6px; height: 50px; background: black; }
+        .minute { width: 4px; height: 70px; background: black; }
+        .second { width: 2px; height: 90px; background: red; }
+    </style>
+</head>
+<body>
+    <div class="clock">
+        <div class="hand hour"></div>
+        <div class="hand minute"></div>
+        <div class="hand second"></div>
+    </div>
+    <script>
+        const startHour = 10;  // Changez cette valeur pour l'heure de démarrage souhaitée
+        const startMinute = 30;  // Changez cette valeur pour la minute de démarrage souhaitée
+        const startSecond = 45;  // Changez cette valeur pour la seconde de démarrage souhaitée
+
+        const updateClock = () => {
+            const now = new Date();
+            const secDeg = ((startSecond + now.getSeconds()) % 60) * 6;
+            const minDeg = ((startMinute + now.getMinutes()) % 60) * 6 + secDeg / 60;
+            const hourDeg = ((startHour + now.getHours() % 12) % 12) * 30 + minDeg / 12;
+
+            document.querySelector('.second').style.transform = `translateX(-50%) rotate(${secDeg}deg)`;
+            document.querySelector('.minute').style.transform = `translateX(-50%) rotate(${minDeg}deg)`;
+            document.querySelector('.hour').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
+        };
+
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>
